@@ -1,0 +1,27 @@
+.list-item-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 124, 0, 1);
+    background-color: #fff;
+    transition: scale 0.3s;
+    transition: background-color 0.3s;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+    &:hover {
+        background-color: rgba(98, 78, 59, 0.15);
+    }
+}
+
+.list-item-info {
+    font-size: 20px;
+
+    &_name {
+        font-weight: 700;
+    }
+
+    &_email {
+        font-weight: 400;
+    }
+}
+
