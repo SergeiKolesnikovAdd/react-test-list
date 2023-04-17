@@ -11,18 +11,17 @@ export const ListSection = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    if (fetching) {
+    if(fetching) {
       console.log("fetching")
       axios
-        .get(`https://jsonplaceholder.typicode.com/comments?_limit=20_page=${currentPage}`)
+        .get(`https://jsonplaceholder.typicode.com/comments?_limit=20&_page=${currentPage}`)
         .then(response => {
-          setText([...text, ...response.data])
+          setText([...text, ...response.data]);
           setCurrentPage(prevState => prevState + 1)
           setTotalCount(response.headers[100])
         })
         .finally(() => setFetching(false))
-      }
-    
+    }
   }, [fetching])
 
   useEffect(()=> {
@@ -35,58 +34,13 @@ export const ListSection = () => {
   const scrollHandler = (e) => {
     if (
       e.target.documentElement.scrollHeight -
-      (e.target.documentElement.scrollTop + window.innerHeight) < 100 && text.length < totalCount) {
+      (e.target.documentElement.scrollTop + window.innerHeight) < 100 && text.length === totalCount) {
         setFetching(true)
       }
+    // console.log("scrollHeight", e.target.documentElement.scrollHeight)
+    // console.log("scrollTop", e.target.documentElement.scrollTop);
+    // console.log("innerHeight", window.innerHeight);
   }
-
-    // useEffect(() => {
-    //   if (fetching) {
-    //     console.log("fetching");
-    //     setFetching(false);
-    //     axios
-    //       .get(
-    //         `https://jsonplaceholder.typicode.com/comments?_limit=20_page=${currentPage}`
-    //       )
-    //       .then((res) => {
-    //         setData((data) => data.concat(res.data));
-    //         setCurrentPage((prevState) => prevState + 1);
-    //         setTotalCount(res.headers[100]);
-    //       });
-    //   }
-    // }, [fetching]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `https://jsonplaceholder.typicode.com/comments?_limit=20_page=${currentPage}`
-  //     )
-  //     .then((res) => {
-  //       // setData((data) => data.concat(res.data));
-  //       setData([...data, ...res.data])
-  //       setTotalCount(res.headers[100]);
-  //     });
-  // }, [currentPage, ]);
-  // console.log(data)
-
-  // useEffect(() => {
-  //   const scrollHandler = (e) => {
-  //     if (
-  //       e.target.documentElement.scrollHeight -
-  //         (e.target.documentElement.scrollTop + window.innerHeight) <
-  //         100 &&
-  //       data.length < totalCount
-  //     ) {
-  //       setCurrentPage((prevState) => prevState + 1);
-  //       console.log("pizda")
-  //       // setFetching(true);
-  //     }
-  //   };
-  //   document.addEventListener("scroll", scrollHandler);
-  //   return function () {
-  //     document.removeEventListener("scroll", scrollHandler);
-  //   };
-  // }, []);
 
   return (
     <>
