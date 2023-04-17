@@ -37,10 +37,7 @@ export const ListSection = () => {
       (e.target.documentElement.scrollTop + window.innerHeight) < 100 && text.length === totalCount) {
         setFetching(true)
       }
-    // console.log("scrollHeight", e.target.documentElement.scrollHeight)
-    // console.log("scrollTop", e.target.documentElement.scrollTop);
-    // console.log("innerHeight", window.innerHeight);
-  }
+    }
 
   return (
     <>
