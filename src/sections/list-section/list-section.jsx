@@ -13,31 +13,32 @@ export const ListSection = () => {
   useEffect(() => {
     if (fetching) {
       console.log("fetching");
+      console.log()
+      setFetching(false);
+      axios
+        .get(
+          `https://jsonplaceholder.typicode.com/comments?_limit=20_page=${currentPage}`
+        )
+        .then((res) => {
+          setData((data) => data.concat(res.data));
+          setCurrentPage((prevState) => prevState + 1);
+          setTotalCount(res.headers[100]);
+        })
     }
-    axios
-      .get(
-        `https://jsonplaceholder.typicode.com/comments?_limit=20_page=${currentPage}`
-      )
-      .then((res) => {
-        setData([...data, ...res.data]);
-        setCurrentPage((prevState) => prevState + 1);
-        setTotalCount(res.headers[100]);
-      })
-      .finally(() => setFetching(false));
-  }, [fetching]);
-
-  const scrollHandler = (e) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-        100 &&
-      data.length < totalCount
-    ) {
-      setFetching(true);
-    }
-  };
+  }, [fetching, currentPage]);
+  console.log(data)
 
   useEffect(() => {
+    const scrollHandler = (e) => {
+      if (
+        e.target.documentElement.scrollHeight -
+          (e.target.documentElement.scrollTop + window.innerHeight) <
+          100 &&
+        data.length < totalCount
+      ) {
+        setFetching(true);
+      }
+    };
     document.addEventListener("scroll", scrollHandler);
     return function () {
       document.removeEventListener("scroll", scrollHandler);
